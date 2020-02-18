@@ -73,9 +73,14 @@
                 // don't do the normal browser behavior
                 e.preventDefault();
 
-                $(e.target).addClass('text-danger');
+                $(this).addClass('text-danger');
+                $(this).find('.fa')
+                    .removeClass('fa-trash')
+                    .addClass('fa-spinner')
+                    .addClass('fa-spin');
                 // NO JQUERY PLAIN JAVASCRIPT BE LIKE
                 // e.target.className = e.target.className + ' text-danger';
+                // console.log(e.currentTarget === this);
             });
 
             $table.find('tbody tr').on('click', function() {
