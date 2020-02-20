@@ -69,12 +69,23 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        $(document).ready(function() {
-            var $table = $('.js-rep-log-table');
+        var RepLogApp = {
+            initialize: function($wrapper) {
+                this.$wrapper = $wrapper;
 
-            $table.find('.js-delete-rep-log').on('click', function(e) {
-                // don't do the normal browser behavior
-                // e.preventDefault();
+                this.$wrapper.find('.js-delete-rep-log').on(
+                    'click',
+                    this.handleRepLogDelete
+                );
+
+                this.$wrapper.find('tbody tr').on(
+                    'click',
+                    this.handleRowClick
+                );
+            },
+
+            handleRepLogDelete: function(e) {
+                e.preventDefault();
 
                 $(this).addClass('text-danger');
                 $(this).find('.fa')
@@ -84,24 +95,27 @@
 
                 var deleteUrl = $(this).data('url');
                 var $row = $(this).closest('tr');
-                var $totalWeightContainer = $table.find('.js-total-weight');
+                var $totalWeightContainer = this.$wrapper.find('.js-total-weight');
                 var newWeight = $totalWeightContainer.html() - $row.data('weight');
                 $.ajax({
                     url: deleteUrl,
                     method: 'DELETE',
-                    success: function() {
+                    success: function () {
                         $row.fadeOut();
                         $totalWeightContainer.html(newWeight);
                     }
                 })
-                // NO JQUERY PLAIN JAVASCRIPT BE LIKE
-                // e.target.className = e.target.className + ' text-danger';
-                // console.log(e.currentTarget === this);
-            });
+            },
 
-            $table.find('tbody tr').on('click', function() {
-               console.log('Row clicked');
-            });
+            handleRowClick: function() {
+                console.log('Row clicked');
+            }
+        };
+
+        $(document).ready(function() {
+            var $table = $('.js-rep-log-table');
+
+            RepLogApp.initialize($table);
         });
     </script>
 {% endblock %}
