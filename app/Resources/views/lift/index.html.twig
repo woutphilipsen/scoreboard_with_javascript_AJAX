@@ -72,7 +72,8 @@
     <script>
         $(document).ready(function() {
             var $table = $('.js-rep-log-table');
-            RepLogApp.initialize($table);
+
+            var RepLogApp = new RepLogApp($table);
         });
     </script>
 {% endblock %}
