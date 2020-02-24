@@ -1,9 +1,5 @@
 ## Setup
 
-If you've just downloaded the code, congratulations!
-
-To get it working, follow these steps:
-
 **Setup parameters.yml**
 
 Next, look at the configuration and make any adjustments you
